@@ -19,7 +19,7 @@ export class FindOneUserController {
     async handle(req: Request, res: Response) {
         const { id } = req.params;
 
-        const user = await prismaClient.user.findMany({
+        const user = await prismaClient.user.findUnique({
             where: {
                 id
             },
