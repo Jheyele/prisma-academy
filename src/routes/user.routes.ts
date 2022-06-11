@@ -5,6 +5,7 @@ import { CreateUserController } from "../modules/user/useCases/createUser/Create
 import { DeleteUserController } from "../modules/user/useCases/deleteUser/DeleteUserController";
 import { FindAllUsersController } from "../modules/user/useCases/findAllUsers/FindAllUserController";
 import { FindOneUserController } from "../modules/user/useCases/findOneUser/FindOneUserController";
+import { LinkUserToClassController } from "../modules/user/useCases/linkUserToClass/LinkUserToClassController";
 import { UpdateUserController } from "../modules/user/useCases/updateUser/UpdateUserController";
 
 const userRoutes = Router();
@@ -14,22 +15,24 @@ const findAllUser = new FindAllUsersController();
 const findOneUser = new FindOneUserController();
 const deleteUser = new DeleteUserController();
 const updateUser = new UpdateUserController();
+const userClass = new LinkUserToClassController();
 
 // create user
 userRoutes.post("/", createUser.handle);
 
 // get all users
-userRoutes.get("/", ensureAuthenticated, findAllUser.handle);
+userRoutes.get("/", findAllUser.handle);
 
 // get user
-userRoutes.get("/:id", ensureAuthenticated, findOneUser.handle);
+userRoutes.get("/:id", findOneUser.handle);
 
 // delete user
 userRoutes.delete("/:id", ensureAuthenticated, ensureAdmin, deleteUser.handle);
 
 // update user
-userRoutes.put("/:id", ensureAuthenticated, ensureAdmin, updateUser.handle);
+userRoutes.put("/:id", updateUser.handle);
 
+userRoutes.post("/link-user-to-class", userClass.handle);
 
 
 export { userRoutes };
