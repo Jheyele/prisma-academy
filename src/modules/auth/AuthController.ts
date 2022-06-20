@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 export class AuthController {
     async authenticate(req: Request, res: Response) {
         const { email, password } = req.body;
-
+        console.log("TESTE", email, password)
         const userExist = await prismaClient.user.findFirst({ where: { email } });
 
         if (!userExist) {

@@ -15,11 +15,12 @@ export default function (req: Request, res: Response, next: NextFunction) {
         return res.status(401).json("Token missing!");
     }
 
-
     const token = authorization.replace('Bearer', '').trim();
 
     try {
-        const { id } = verify(token, process.env.SECRET_KEY_JWT as string) as IToken;
+        const { id, isAdmin } = verify(token, process.env.SECRET_KEY_JWT as string) as IToken;
+        req.userId = id;
+        req.isAdmin = Boolean(isAdmin);
 
         return next();
 

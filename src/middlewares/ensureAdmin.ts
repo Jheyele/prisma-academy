@@ -18,7 +18,7 @@ export default function (req: Request, res: Response, next: NextFunction) {
     try {
         const token = authorization.replace('Bearer', '').trim();
         const data = jwt.verify(token, process.env.SECRET_KEY_JWT as string);
-        const { isAdmin } = data as IToken;
+        const { isAdmin, id } = data as IToken;
 
         if (isAdmin) {
             return next();
