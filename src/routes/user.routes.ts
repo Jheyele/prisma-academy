@@ -1,38 +1,24 @@
 import { Router } from "express";
+import { UserController } from "../controller/UserController";
+
 import ensureAdmin from "../middlewares/ensureAdmin";
 import ensureAuthenticated from "../middlewares/ensureAuthenticated";
-import { CreateUserController } from "../modules/user/useCases/createUser/CreateUserController";
-import { DeleteUserController } from "../modules/user/useCases/deleteUser/DeleteUserController";
-import { FindAllUsersController } from "../modules/user/useCases/findAllUsers/FindAllUserController";
-import { FindOneUserController } from "../modules/user/useCases/findOneUser/FindOneUserController";
-import { LinkUserToClassController } from "../modules/user/useCases/linkUserToClass/LinkUserToClassController";
-import { UpdateUserController } from "../modules/user/useCases/updateUser/UpdateUserController";
+
 
 const userRoutes = Router();
+const userController = new UserController();
 
-const createUser = new CreateUserController();
-const findAllUser = new FindAllUsersController();
-const findOneUser = new FindOneUserController();
-const deleteUser = new DeleteUserController();
-const updateUser = new UpdateUserController();
-const userClass = new LinkUserToClassController();
+userRoutes.post("/", userController.CreateUser);
 
-// create user
-userRoutes.post("/", createUser.handle);
+userRoutes.get("/", userController.FindAllUsers);
 
-// get all users
-userRoutes.get("/", findAllUser.handle);
+userRoutes.get("/:id", userController.findOneUser);
 
-// get user
-userRoutes.get("/:id", findOneUser.handle);
+userRoutes.delete("/:id", ensureAuthenticated, ensureAdmin, userController.DeleteUser);
 
-// delete user
-userRoutes.delete("/:id", ensureAuthenticated, ensureAdmin, deleteUser.handle);
+userRoutes.put("/:id", userController.UpdateUser);
 
-// update user
-userRoutes.put("/:id", updateUser.handle);
-
-userRoutes.post("/link-user-to-class", userClass.handle);
+userRoutes.post("/link-user-to-class", userController.LinkUserToClassController);
 
 
 export { userRoutes };
