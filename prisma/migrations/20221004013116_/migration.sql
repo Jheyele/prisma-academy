@@ -22,15 +22,14 @@ CREATE TABLE "classes" (
 
 -- CreateTable
 CREATE TABLE "users_classes" (
-    "id" TEXT NOT NULL,
-    "id_user" TEXT NOT NULL,
-    "id_class" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
+    "class_id" TEXT NOT NULL,
 
-    CONSTRAINT "users_classes_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "users_classes_pkey" PRIMARY KEY ("user_id","class_id")
 );
 
 -- AddForeignKey
-ALTER TABLE "users_classes" ADD CONSTRAINT "users_classes_id_user_fkey" FOREIGN KEY ("id_user") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "users_classes" ADD CONSTRAINT "users_classes_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "users_classes" ADD CONSTRAINT "users_classes_id_class_fkey" FOREIGN KEY ("id_class") REFERENCES "classes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "users_classes" ADD CONSTRAINT "users_classes_class_id_fkey" FOREIGN KEY ("class_id") REFERENCES "classes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

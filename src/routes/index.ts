@@ -5,8 +5,8 @@ import { userRoutes } from "./user.routes";
 
 const routes = Router();
 
-routes.use("/classes", classRoutes);
-routes.use("/users", userRoutes);
-routes.use("/authenticate", authRoute)
+routes.use("/api/v1/classes", classRoutes);
+routes.use("/api/v1/users", userRoutes);
+routes.use("/api/v1/login", authRoute)
 
 export { routes };

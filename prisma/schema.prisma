@@ -33,11 +33,11 @@ model Class {
 }
 
 model UserClass {
-  id       String @id @default(uuid())
-  id_user  String
-  user     User   @relation(fields: [id_user], references: [id])
-  id_class String
-  class    Class  @relation(fields: [id_class], references: [id])
+  user_id  String 
+  user     User   @relation(fields: [user_id], references: [id])
+  class_id String 
+  class    Class  @relation(fields: [class_id], references: [id])
 
+  @@id([user_id, class_id])
   @@map("users_classes")
 }

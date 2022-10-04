@@ -106,15 +106,20 @@ export class UserController {
     }
 
     async LinkUserToClassController(req: Request, res: Response) {
-        const { user_id, class_id } = req.body;
+        const { id_user, id_class } = req.body;
 
+        try{
         const userClass = await prismaClient.userClass.create({
             data: {
-                id_class: class_id,
-                id_user: user_id
+                class_id: id_class,
+                user_id: id_user
             }
         })
         return res.status(201).json(userClass);
+    }catch{
+        return res.status(400).json("Invalid data");
+    }
+       
     }
 
     async UpdateUser(req: Request, res: Response) {
