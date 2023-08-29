@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,7 +10,7 @@ datasource db {
 model User {
   id        String      @id @default(uuid())
   name      String
-  email     String
+  email     String      @unique
   password  String
   phone     String
   isAdmin   Boolean
@@ -33,11 +30,11 @@ model Class {
 }
 
 model UserClass {
-  id       String @id @default(uuid())
-  id_user  String
-  user     User   @relation(fields: [id_user], references: [id])
-  id_class String
-  class    Class  @relation(fields: [id_class], references: [id])
+  user_id  String 
+  user     User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  class_id String 
+  class    Class  @relation(fields: [class_id], references: [id], onDelete: Cascade)
 
+  @@id([user_id, class_id])
   @@map("users_classes")
 }

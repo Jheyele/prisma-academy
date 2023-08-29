@@ -3,7 +3,7 @@ import { prismaClient } from "../database/prismaClient";
 
 export default class ClassController {
 
-    async CreateClass(req: Request, res: Response){
+    async createClass(req: Request, res: Response){
         const { name, teacher } = req.body;
 
         if (name && teacher) {
@@ -19,7 +19,7 @@ export default class ClassController {
         }
     }
 
-    async DeleteClass(req: Request, res: Response) {
+    async deleteClass(req: Request, res: Response) {
         const { id } = req.params;
 
         const classExist = await prismaClient.class.findUnique({ where: { id } });
@@ -37,12 +37,11 @@ export default class ClassController {
         return res.status(204).send();
     }
 
-    async FindAllClass(request: Request, response: Response) {
+    async findAllClass(req: Request, res: Response) {
 
         const classes = await prismaClient.class.findMany();
 
-        return response.json(classes);
+        return res.json(classes);
     }
 
-        
 }
