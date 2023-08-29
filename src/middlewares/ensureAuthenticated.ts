@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
-interface IToken {
+interface Payload {
     id: string,
     isAdmin: string,
     iat: number,
@@ -18,7 +18,7 @@ export default function (req: Request, res: Response, next: NextFunction) {
     const token = authorization.replace('Bearer', '').trim();
 
     try {
-        const { id, isAdmin } = verify(token, process.env.SECRET_KEY_JWT as string) as IToken;
+        const { id, isAdmin } = verify(token, process.env.SECRET_KEY_JWT as string) as Payload;
         req.userId = id;
         req.isAdmin = Boolean(isAdmin);
 

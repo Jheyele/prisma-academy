@@ -17,7 +17,7 @@ export const userSelect: Prisma.UserSelect = {
 }
 
 export class UserController {
-    async CreateUser(req: Request, res: Response) {
+    async createUser(req: Request, res: Response) {
         const { name, email, phone, pass, isAdmin } = req.body;
 
         try {
@@ -54,7 +54,7 @@ export class UserController {
 
     }
 
-    async DeleteUser(req: Request, res: Response) {
+    async deleteUser(req: Request, res: Response) {
         const { id } = req.params;
 
         const userExist = await prismaClient.user.findUnique({ where: { id } });
@@ -72,7 +72,7 @@ export class UserController {
         return res.status(204).send();
     }
 
-    async FindAllUsers(req: Request, res: Response) {
+    async findAllUsers(req: Request, res: Response) {
 
 
         const users = await prismaClient.user.findMany({
@@ -105,7 +105,7 @@ export class UserController {
         return res.status(200).json(user);
     }
 
-    async LinkUserToClassController(req: Request, res: Response) {
+    async linkUserToClassController(req: Request, res: Response) {
         const { id_user, id_class } = req.body;
 
         try{
@@ -115,14 +115,14 @@ export class UserController {
                 user_id: id_user
             }
         })
-        return res.status(201).json(userClass);
+        return res.status(201);
     }catch{
         return res.status(400).json("Invalid data");
     }
        
     }
 
-    async UpdateUser(req: Request, res: Response) {
+    async updateUser(req: Request, res: Response) {
         const { id } = req.params;
         const { name, email, phone, pass, isAdmin } = req.body;
 
